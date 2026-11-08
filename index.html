@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1b1020">
+  <meta name="description" content="Send a little Diwali light with Bitan Creation.">
+  <title>Bitan Creation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&family=Yatra+One&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --night: #1b1020;
+      --night-2: #261329;
+      --cream: #fff2dc;
+      --muted: #d7c2c9;
+      --gold: #ffbd3a;
+      --orange: #ff873c;
+      --rose: #f47b86;
+      --panel: rgba(47, 27, 48, .78);
+      --line: rgba(255, 189, 58, .25);
+    }
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--night); }
+    body {
+      margin: 0; min-height: 100vh; overflow-x: hidden; position: relative;
+      color: var(--cream); background:
+        radial-gradient(ellipse at 50% 68%, rgba(111, 47, 54, .24), transparent 43%),
+        radial-gradient(ellipse at 50% -10%, #3b1d3a 0%, transparent 54%),
+        linear-gradient(180deg, #1b1020 0%, #211226 58%, #170d1b 100%);
+      font-family: "Mukta", sans-serif;
+    }
+    .sky, .embers, #fireworks { position: fixed; inset: 0; pointer-events: none; }
+    .sky {
+      opacity: .65;
+      background-image:
+        radial-gradient(1px 1px at 8% 17%, #ffe6a6 99%, transparent),
+        radial-gradient(1px 1px at 19% 44%, #ffe6a6 99%, transparent),
+        radial-gradient(1.5px 1.5px at 78% 18%, #ffe6a6 99%, transparent),
+        radial-gradient(1px 1px at 88% 38%, #ffe6a6 99%, transparent),
+        radial-gradient(1px 1px at 66% 57%, #ffe6a6 99%, transparent),
+        radial-gradient(1px 1px at 34% 13%, #ffe6a6 99%, transparent),
+        radial-gradient(1px 1px at 53% 32%, #ffe6a6 99%, transparent),
+        radial-gradient(1px 1px at 94% 70%, #ffe6a6 99%, transparent);
+    }
+    .embers { overflow: hidden; }
+    .ember {
+      position: absolute; bottom: -18px; width: 3px; height: 3px; border-radius: 50%;
+      background: var(--gold); box-shadow: 0 0 9px 2px rgba(255,189,58,.55);
+      animation: rise var(--duration, 12s) linear infinite;
+      animation-delay: var(--delay, 0s); left: var(--left, 50%);
+      opacity: .0;
+    }
+    @keyframes rise {
+      0% { transform: translate3d(0,0,0) scale(.65); opacity: 0; }
+      12% { opacity: .7; }
+      82% { opacity: .45; }
+      100% { transform: translate3d(var(--drift, 22px),-110vh,0) scale(1.2); opacity: 0; }
+    }
+    header {
+      width: min(100% - 40px, 900px); margin: 0 auto; padding: 26px 0 10px;
+      text-align: center; position: relative; z-index: 2;
+    }
+    .brand {
+      color: var(--gold); font-size: .76rem; font-weight: 700; letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+    main {
+      position: relative; z-index: 1; width: min(100% - 32px, 560px);
+      margin: 0 auto; padding: 20px 0 54px; text-align: center;
+    }
+    .hero { animation: arrive .8s ease both; }
+    @keyframes arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    h1 {
+      margin: 12px 0 5px; color: var(--cream); font: 400 clamp(2.45rem, 10vw, 4.3rem)/1.08 "Yatra One", cursive;
+      letter-spacing: .01em; text-shadow: 0 0 26px rgba(255,189,58,.12);
+    }
+    .bengali {
+      margin: 0 0 15px; color: var(--gold); font: 700 clamp(1.45rem, 6vw, 2rem)/1.5 "Noto Serif Bengali", serif;
+    }
+    .wish-name { font-size: clamp(1.08rem, 4.5vw, 1.32rem); color: var(--cream); margin: 10px 0 8px; }
+    .subline { color: var(--muted); font-size: 1rem; line-height: 1.65; max-width: 390px; margin: 0 auto 18px; }
+    .diya-wrap {
+      width: min(78vw, 310px); margin: 6px auto 18px; position: relative;
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.28));
+    }
+    .diya-glow {
+      position: absolute; width: 74%; height: 62%; left: 13%; top: 13%;
+      border-radius: 50%; background: rgba(255,154,49,.22); filter: blur(30px);
+      animation: glow 2.4s ease-in-out infinite alternate;
+    }
+    @keyframes glow { from { opacity: .55; transform: scale(.86); } to { opacity: 1; transform: scale(1.12); } }
+    .diya {
+      display: block; width: 100%; position: relative; cursor: pointer; outline: none;
+      touch-action: manipulation;
+    }
+    .diya:focus-visible { filter: drop-shadow(0 0 8px var(--gold)); }
+    .flame {
+      transform-origin: 150px 127px;
+      animation: flicker .16s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 9px rgba(255,170,54,.85));
+    }
+    @keyframes flicker {
+      from { transform: rotate(-2deg) scaleX(.96) scaleY(1); }
+      to { transform: rotate(2deg) scaleX(1.06) scaleY(1.08); }
+    }
+    .pop .flame { animation: pop .55s ease-out; }
+    @keyframes pop {
+      0% { transform: scale(.7); opacity: .7; }
+      45% { transform: translateY(-16px) scale(1.42); }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .tap-hint { color: #c9aeb7; font-size: .86rem; margin: -8px 0 20px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 22px;
+      padding: 22px; text-align: left; box-shadow: 0 18px 55px rgba(0,0,0,.22);
+      backdrop-filter: blur(10px); margin-top: 20px;
+    }
+    label { display: block; color: var(--cream); font-weight: 600; margin-bottom: 8px; }
+    input {
+      width: 100%; min-height: 50px; border-radius: 12px; border: 1px solid rgba(255,242,220,.25);
+      background: rgba(20,10,23,.68); color: var(--cream); padding: 12px 14px;
+      font: 1rem "Mukta", sans-serif; outline: none;
+    }
+    input:focus-visible, button:focus-visible, a:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 3px;
+    }
+    .preview-label { margin: 14px 0 6px; color: var(--muted); font-size: .86rem; }
+    .link-preview {
+      overflow-wrap: anywhere; min-height: 44px; padding: 10px 12px; border-radius: 10px;
+      background: rgba(12,7,15,.5); border: 1px solid rgba(255,255,255,.09);
+      color: #f6dba9; font-size: .9rem; user-select: all;
+    }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+    button, .button-link {
+      min-height: 48px; border: 0; border-radius: 12px; padding: 11px 14px;
+      font: 700 .98rem "Mukta", sans-serif; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center; text-align: center;
+      transition: transform .16s ease, filter .16s ease;
+    }
+    button:hover, .button-link:hover { transform: translateY(-2px); filter: brightness(1.06); }
+    .primary { background: var(--gold); color: #2a1720; }
+    .secondary { background: rgba(255,242,220,.1); color: var(--cream); border: 1px solid rgba(255,242,220,.18); }
+    .whatsapp { background: #f1a56a; color: #29131c; }
+    .full { width: 100%; margin-top: 12px; }
+    .status { min-height: 24px; color: #ffd58a; font-size: .9rem; margin: 9px 0 0; }
+    footer {
+      position: relative; z-index: 2; text-align: center; padding: 0 16px 24px;
+      color: #a98e9d; font-size: .82rem; letter-spacing: .04em;
+    }
+    .hidden { display: none !important; }
+    #fireworks { z-index: 5; width: 100%; height: 100%; }
+    @media (max-width: 420px) {
+      header { padding-top: 20px; }
+      main { width: min(100% - 26px, 560px); padding-top: 14px; }
+      .panel { padding: 18px; }
+      .actions { grid-template-columns: 1fr; }
+      .diya-wrap { width: min(76vw, 280px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+      .embers { display: none; }
+      .diya-glow { opacity: .8; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <div class="embers" id="embers" aria-hidden="true"></div>
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+
+  <header><div class="brand">BITAN CREATION</div></header>
+
+  <main>
+    <section class="hero">
+      <h1 id="headline">A Little Light, A Lot of Love</h1>
+      <p class="bengali" lang="bn">শুভ দীপাবলি</p>
+      <p class="wish-name" id="wishName" aria-live="polite"></p>
+      <p class="subline" id="wishLine">May your Diwali glow with joy, peace and beautiful new beginnings.</p>
+
+      <div class="diya-wrap">
+        <div class="diya-glow" aria-hidden="true"></div>
+        <svg class="diya" id="diya" viewBox="0 0 300 230" role="button" tabindex="0"
+             aria-label="Light the diya and celebrate Diwali">
+          <defs>
+            <linearGradient id="clay" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#d77b43"/><stop offset=".55" stop-color="#9e482f"/><stop offset="1" stop-color="#5d2930"/>
+            </linearGradient>
+            <linearGradient id="oil" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffd36c"/><stop offset="1" stop-color="#d97735"/>
+            </linearGradient>
+            <radialGradient id="flameFill">
+              <stop offset="0" stop-color="#fff6bd"/><stop offset=".42" stop-color="#ffbd3a"/><stop offset="1" stop-color="#f4773d"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="150" cy="190" rx="112" ry="17" fill="#09060d" opacity=".32"/>
+          <path d="M42 143 Q150 183 258 143 Q243 207 150 211 Q57 207 42 143Z" fill="url(#clay)" stroke="#f0a15a" stroke-width="3"/>
+          <path d="M43 143 Q150 178 257 143 Q150 112 43 143Z" fill="#e99a53" stroke="#ffc16b" stroke-width="3"/>
+          <ellipse cx="150" cy="145" rx="82" ry="18" fill="url(#oil)" opacity=".95"/>
+          <path d="M146 142 Q149 124 158 115" fill="none" stroke="#54252a" stroke-width="5" stroke-linecap="round"/>
+          <g class="flame" id="flame">
+            <path d="M150 128 C118 99 148 70 158 43 C166 71 194 91 169 125 C164 133 156 135 150 128Z" fill="url(#flameFill)"/>
+            <path d="M155 126 C143 111 158 94 163 82 C174 104 172 119 160 129Z" fill="#fff4c4" opacity=".9"/>
+          </g>
+          <path d="M68 158 Q150 184 232 158" fill="none" stroke="#ffbd78" stroke-width="3" opacity=".5"/>
+          <circle cx="85" cy="177" r="3" fill="#ffbd3a"/><circle cx="215" cy="177" r="3" fill="#ffbd3a"/>
+        </svg>
+      </div>
+      <p class="tap-hint">Tap the diya to send a little sparkle ✨</p>
+    </section>
+
+    <section class="panel" id="homePanel">
+      <label for="senderName">Whose Diwali are you lighting up?</label>
+      <input id="senderName" type="text" maxlength="60" autocomplete="name"
+             placeholder="Enter a name (max 30 characters)" aria-describedby="nameHelp">
+      <div id="nameHelp" class="preview-label">Up to 30 characters. Bengali and other languages are welcome.</div>
+      <div class="preview-label">YOUR LIVE LINK PREVIEW</div>
+      <div class="link-preview" id="linkPreview" tabindex="0">Your link will appear here…</div>
+      <div class="actions">
+        <button class="primary" id="copyBtn" type="button">Copy link</button>
+        <a class="button-link whatsapp" id="whatsappBtn" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <button class="secondary full" id="previewBtn" type="button">Preview</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel hidden" id="wishPanel">
+      <button class="primary full" id="homeBtn" type="button">Light one for someone</button>
+    </section>
+  </main>
+
+  <footer>Made by Bitan Creation</footer>
+
+  <script>
+    (() => {
+      "use strict";
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const nameInput = document.getElementById("senderName");
+      const linkPreview = document.getElementById("linkPreview");
+      const status = document.getElementById("status");
+      const whatsappBtn = document.getElementById("whatsappBtn");
+      const copyBtn = document.getElementById("copyBtn");
+      const previewBtn = document.getElementById("previewBtn");
+      const diya = document.getElementById("diya");
+      const homePanel = document.getElementById("homePanel");
+      const wishPanel = document.getElementById("wishPanel");
+      const headline = document.getElementById("headline");
+      const wishName = document.getElementById("wishName");
+      const wishLine = document.getElementById("wishLine");
+      const canvas = document.getElementById("fireworks");
+      const ctx = canvas.getContext("2d");
+      const encoder = new TextEncoder();
+
+      function cleanName(value) {
+        return Array.from(value.trim()).slice(0, 30).join("");
+      }
+      function encodeBase64Url(value) {
+        const bytes = encoder.encode(value);
+        let binary = "";
+        bytes.forEach(byte => binary += String.fromCharCode(byte));
+        return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+      }
+      function decodeBase64Url(value) {
+        const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+        const padded = normalized + "=".repeat((4 - normalized.length % 4) % 4);
+        const binary = atob(padded);
+        const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+        return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+      }
+      function makeLink(name) {
+        const code = encodeBase64Url(name);
+        return `https://${window.location.host}/w/${code}`;
+      }
+      function updateLink() {
+        const name = cleanName(nameInput.value);
+        if (nameInput.value !== name) nameInput.value = name;
+        const link = name ? makeLink(name) : "";
+        linkPreview.textContent = link || "Your link will appear here…";
+        const message = name ? `${name} lit a diya for you ✨ ${link}` : "";
+        whatsappBtn.href = name ? `https://wa.me/?text=${encodeURIComponent(message)}` : "https://wa.me/";
+        whatsappBtn.setAttribute("aria-disabled", name ? "false" : "true");
+        return link;
+      }
+      function showStatus(message) { status.textContent = message; }
+
+      nameInput.addEventListener("input", updateLink);
+      copyBtn.addEventListener("click", async () => {
+        const link = updateLink();
+        if (!link) { showStatus("Enter a name first."); nameInput.focus(); return; }
+        try {
+          await navigator.clipboard.writeText(link);
+          showStatus("Link copied! Share the light ✨");
+        } catch (_) {
+          const range = document.createRange();
+          range.selectNodeContents(linkPreview);
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          showStatus("Link selected — press and hold to copy.");
+          linkPreview.focus();
+        }
+      });
+      previewBtn.addEventListener("click", () => {
+        const name = cleanName(nameInput.value);
+        if (!name) { showStatus("Enter a name to preview your wish."); nameInput.focus(); return; }
+        window.location.href = makeLink(name).replace(/^https:\/\/[^/]+/, "");
+      });
+      document.getElementById("homeBtn").addEventListener("click", () => {
+        window.location.href = "/";
+      });
+
+      function getCodeFromPath() {
+        const match = window.location.pathname.match(/^\/w\/([^/]+)\/?$/);
+        return match ? match[1] : null;
+      }
+      const code = getCodeFromPath();
+      if (code) {
+        let sender = "Someone";
+        try {
+          const decoded = decodeBase64Url(code);
+          if (decoded.trim()) sender = cleanName(decoded) || "Someone";
+        } catch (_) { sender = "Someone"; }
+        headline.textContent = "A Diya Lit Just for You";
+        wishName.textContent = `${sender} lit a diya for you ✨`;
+        wishLine.textContent = "May this little light bring you warmth, sweets and a very bright year.";
+        homePanel.classList.add("hidden");
+        wishPanel.classList.remove("hidden");
+      } else {
+        headline.textContent = "A Little Light, A Lot of Love";
+        wishLine.textContent = "Send a little Diwali glow to someone who makes your world brighter.";
+        homePanel.classList.remove("hidden");
+        wishPanel.classList.add("hidden");
+        updateLink();
+      }
+
+      if (!reducedMotion) {
+        const embers = document.getElementById("embers");
+        for (let i = 0; i < 17; i++) {
+          const ember = document.createElement("span");
+          ember.className = "ember";
+          ember.style.setProperty("--left", `${Math.random() * 100}%`);
+          ember.style.setProperty("--duration", `${9 + Math.random() * 9}s`);
+          ember.style.setProperty("--delay", `${-Math.random() * 15}s`);
+          ember.style.setProperty("--drift", `${Math.round(Math.random() * 70 - 35)}px`);
+          embers.appendChild(ember);
+        }
+      }
+
+      let particles = [];
+      let animationFrame = 0;
+      function resizeCanvas() {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(window.innerWidth * ratio);
+        canvas.height = Math.floor(window.innerHeight * ratio);
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      function burst(x, y, count = 54) {
+        if (reducedMotion) return;
+        const colors = ["#ffbd3a", "#ff873c", "#f47b86", "#ffe4a1"];
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 1.1 + Math.random() * 4.2;
+          particles.push({
+            x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+            life: 55 + Math.random() * 30, maxLife: 85,
+            size: 1.3 + Math.random() * 2.2,
+            color: colors[Math.floor(Math.random() * colors.length)]
+          });
+        }
+        if (!animationFrame) animateFireworks();
+      }
+      function animateFireworks() {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        particles = particles.filter(p => p.life > 0);
+        for (const p of particles) {
+          p.x += p.vx; p.y += p.vy; p.vy += .035; p.vx *= .992; p.life--;
+          ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+          ctx.fillStyle = p.color;
+          ctx.shadowColor = p.color; ctx.shadowBlur = 10;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+        if (particles.length) animationFrame = requestAnimationFrame(animateFireworks);
+        else { animationFrame = 0; ctx.clearRect(0, 0, window.innerWidth, window.innerHeight); }
+      }
+      function lightDiya() {
+        diya.classList.remove("pop");
+        void diya.getBoundingClientRect();
+        diya.classList.add("pop");
+        if (!reducedMotion) {
+          const rect = diya.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          const y = rect.top + rect.height * .42;
+          burst(x, y, 65);
+          if (Math.random() > .45) {
+            setTimeout(() => burst(window.innerWidth * (.25 + Math.random() * .5), window.innerHeight * .24, 42), 220);
+          }
+        }
+      }
+      diya.addEventListener("click", lightDiya);
+      diya.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          lightDiya();
+        }
+      });
+      if (!reducedMotion) {
+        window.setTimeout(() => {
+          burst(window.innerWidth * .5, window.innerHeight * .25, 60);
+        }, 1500);
+      }
+    })();
+  </script>
+</body>
+</html>
